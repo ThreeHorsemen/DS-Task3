@@ -11,15 +11,19 @@ class DWatchGUI:
     self.eventhandler = eventhandler
 
     self.parent = parent
-
+    self.mode = True
+    self.lightOffCounter = 0
     self.handleEventOn
 
   def handleEventOn(self):
     self.eventhandler.event("on")
 
   def wait(self):
-    self.eventhandler.event("lightOff2")
+    if self.lightOffCounter > 1:
+      self.lightOffCounter = 0
+      self.eventhandler.event("lightOff2")
     print "wait"
+  
 
   # -----------------------------------
   # Events to be sent to the Statechart
@@ -38,7 +42,6 @@ class DWatchGUI:
 
   def topLeftPressed(self):
     self.eventhandler.event("changeMode")
-    self.eventhandler.event('selectNext')
 
   def topLeftReleased(self):
     print "topLeftReleased"
@@ -96,7 +99,20 @@ class DWatchGUI:
 
   def increaseTimeByOne(self):
     self.GUI.increaseTimeByOne()
-    self.refreshTimeDisplay()
+    if self.mode:
+      self.refreshTimeDisplay()
+    else:
+      self.refreshChronoDisplay()
+
+
+  def increaseTimeByOneLight(self):
+    self.GUI.increaseTimeByOne()
+    self.lightOffCounter += 1
+    self.wait()
+    if self.mode:
+      self.refreshTimeDisplay()
+    else:
+      self.refreshChronoDisplay()
 
   def resetChrono(self):
     self.GUI.resetChrono()
@@ -112,6 +128,9 @@ class DWatchGUI:
   def selectNext(self):
     self.GUI.selectNext()
 
+  def changeMode(self):
+    self.mode = not self.mode
+
   #Modify the state corresponing to the selection
   def increaseSelection(self):
     self.GUI.increaseSelection()
@@ -121,12 +140,13 @@ class DWatchGUI:
 
 
   #Light / Alarm:
-
   def setIndiglo(self):
     self.GUI.setIndiglo()
 
   def unsetIndiglo(self):
     self.GUI.unsetIndiglo()
+
+
 
   def setAlarm(self):
     self.GUI.setAlarm()

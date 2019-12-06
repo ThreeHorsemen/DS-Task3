@@ -42,7 +42,9 @@ STATECHART:
       AlarmEdit
     Chrono
       ChronoDisplay
-
+    Light
+      LightOn
+      LightToBeOff
 TRANSITION:
     S: Initial
     N: Time.TimeDisplay
@@ -76,6 +78,53 @@ TRANSITION:
     N: Time.TimeEdit
     E: increase
     O: g.increaseSelection()
+
+TRANSITION:
+    S: Time.TimeDisplay
+    N: Light.LightOn
+    E: lightOn
+    O: g.setIndiglo()
+
+TRANSITION:
+    S: Light.LightOn
+    N: Light.LightOn
+    T: 1
+    O: g.increaseTimeByOne()
+
+TRANSITION:
+    S: Light.LightOn
+    N: Light.LightToBeOff
+    E: lightOff
+
+TRANSITION:
+    S: Light.LightToBeOff
+    N: Light.LightToBeOff
+    T: 1
+    O: g.increaseTimeByOneLight()
+
+TRANSITION:
+    S: Light.LightToBeOff
+    N: Time.TimeDisplay
+    E: lightOff2
+    O: g.unsetIndiglo()
+
+TRANSITION:
+    S: Time.TimeDisplay
+    N: Chrono.ChronoDisplay
+    E: changeMode
+    O: g.changeMode()
+
+TRANSITION:
+    S: Chrono.ChronoDisplay
+    N: Chrono.ChronoDisplay
+    T: 1
+    O: g.increaseTimeByOne()
+
+TRANSITION:
+    S: Chrono.ChronoDisplay
+    N: Time.TimeDisplay
+    E: changeMode
+    O: g.changeMode()
 
 ######################
 # TIME TRANSITIONS END
