@@ -129,7 +129,7 @@ class DWatchGUI:
     self.GUI.selectNext()
 
   def changeMode(self):
-    self.mode = not self.mode
+      self.mode = not self.mode
 
   #Modify the state corresponing to the selection
   def increaseSelection(self):
