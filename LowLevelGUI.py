@@ -400,15 +400,8 @@ class LowLevelGUI:
       self.displayCanvas.delete(self.timeTag)
       self.timeTag=None
 
-  def drawChrono(self, toDraw=["years","months","days"]):
-    chronoToDraw  = self.__getDateAsString()
-
-    if "months" not in toDraw:
-      chronoToDraw="  "+chronoToDraw[2:]
-    if "days" not in toDraw:
-      chronoToDraw=chronoToDraw[0:3]+"  "+chronoToDraw[5:]
-    if "years" not in toDraw:
-      chronoToDraw=chronoToDraw[0:6]+"  "
+  def drawChrono(self):
+    chronoToDraw  = self.__getChronoAsString()
 
     self.clearDisplay()
 
@@ -428,7 +421,7 @@ class LowLevelGUI:
 
   def drawDate(self, toDraw=["years","months","days"]):
     dateToDraw = self.__getDateAsString()
-    print dateToDraw
+
     if "months" not in toDraw:
       dateToDraw="  "+dateToDraw[2:]
     if "days" not in toDraw:
